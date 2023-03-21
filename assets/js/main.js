@@ -12,12 +12,12 @@ Invece di usare prompt e allerte usate inputs ed elementi della dom per mostrare
 const container_el = document.querySelector('.container');
 
 const array_container = document.createElement('div');
-
+const num_to_generate = 5;
 //assegno l'array dei numeri ad una variabile
 const numb_to_remember = [];
 //genero 5 numeri casuali e li inserisco nell'array
 function generateNumb () {
-    const num_to_generate = 5;
+    
     while (numb_to_remember.length < num_to_generate) {
         const random_number =  Math.floor(Math.random() * (100 - 1) ) + 1;
         if (!numb_to_remember.includes(random_number)) {
@@ -48,41 +48,41 @@ function hideNumbers() {
 setTimeout(askNumbers, 4000);
 //creo un array vuoto dove verranno salvati i numeri inseriti dall'utente 
 let resultArray = [];
+const guess_el = document.querySelector('.guess_container');
+
 
 function askNumbers() {
-    const guess_el = document.querySelector('.guess_container');
+    
     guess_el.classList.remove('d-none');
+    
+    const spanAskNumb = document.querySelector('.guessed_numbers')
+}
 
-    const inputField = document.getElementById('guess_numbers');
-    const sub_btn = document.querySelector('.submit_btn');
-    sub_btn.addEventListener('click', function() {
-       //con un loop che itera per il numero di i di numb_to_remember
-        
-            //chiedo all'utente attraverso un prompt di inserire i numeri che ha visto e salvo il risultato in una variabile
-            const ask_numb = inputField.value;
-            
-/* for (let i = 0; i < numb_to_remember.length; i++) {
-            //assegno i numeri risultanti a un array 
-        } */  
-            if (resultArray.length < numb_to_remember.length) {
-                resultArray.push(ask_numb);
-                inputField.value = '';
-            }
+
+const sub_btn = document.querySelector('.submit_btn');
+const inputField = document.getElementById('guess_numbers');
+
+
+sub_btn.addEventListener('click', function() {
+
+        const ask_numb = Number(inputField.value);
+
+        if (resultArray.length < num_to_generate) {
+            resultArray.push(ask_numb);
+            inputField.value = '';
+        } else {
+            answer(numb_to_remember, resultArray);
+        }
 
         console.log(resultArray);
 
-        
-    })
-
-    answer();
-}
-
+})
 
 //console.log(resultArray);
 //console.log(numb_to_remember)
 
 //confronto l'array creato con l'array iniziale
-function answer() {
+function answer(numb_to_remember, resultArray) {
     let totNumb = 0;
     let guessedArray = [];
 
@@ -93,14 +93,18 @@ function answer() {
         if (numb_to_remember.includes(ask_numb)) {
             //lo aggiungo all'array dei numeri indovinati
             guessedArray.push(ask_numb);
-
+            console.log(guessedArray);
             //incremento il valore di numeri indovinati
             totNumb++;
         }
     } 
 
+
+
     print(totNumb, guessedArray);
 }
+
+
 
 
 function print(number, array) {
