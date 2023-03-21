@@ -6,10 +6,12 @@ Dopo che sono stati inseriti i 5 numeri, il software dice quanti e quali dei num
 
 /* Bonus:
 Invece di usare prompt e allerte usate inputs ed elementi della dom per mostrare a schermo il risultato */
+
+
 //
 const container_el = document.querySelector('.container');
 
-const array_container = document.createElement('span');
+const array_container = document.createElement('div');
 
 //assegno l'array dei numeri ad una variabile
 const numb_to_remember = [];
@@ -48,15 +50,30 @@ setTimeout(askNumbers, 4000);
 let resultArray = [];
 
 function askNumbers() {
-    
-    //con un loop che itera per il numero di i di numb_to_remember
-    for (let i = 0; i < numb_to_remember.length; i++) {
-        //chiedo all'utente attraverso un prompt di inserire i numeri che ha visto e salvo il risultato in una variabile
-        const ask_numb = Number(prompt('inserisci i numeri che hai visto, uno alla volta'));
-        //assegno i numeri risultanti a un array
-        resultArray.push(ask_numb);
-    } 
-    
+    const guess_el = document.querySelector('.guess_container');
+    guess_el.classList.remove('d-none');
+
+    const inputField = document.getElementById('guess_numbers');
+    const sub_btn = document.querySelector('.submit_btn');
+    sub_btn.addEventListener('click', function() {
+       //con un loop che itera per il numero di i di numb_to_remember
+        
+            //chiedo all'utente attraverso un prompt di inserire i numeri che ha visto e salvo il risultato in una variabile
+            const ask_numb = inputField.value;
+            
+/* for (let i = 0; i < numb_to_remember.length; i++) {
+            //assegno i numeri risultanti a un array 
+        } */  
+            if (resultArray.length < numb_to_remember.length) {
+                resultArray.push(ask_numb);
+                inputField.value = '';
+            }
+
+        console.log(resultArray);
+
+        
+    })
+
     answer();
 }
 
@@ -87,7 +104,7 @@ function answer() {
 
 
 function print(number, array) {
-    const resultSpan = document.createElement('span');
+    const resultSpan = document.createElement('div');
     resultSpan.innerHTML = `hai indovinato ${number} numeri: ${array}`;
     container_el.insertAdjacentElement('beforeend', resultSpan);
 }
